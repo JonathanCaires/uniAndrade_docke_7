@@ -1,8 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wno-unu
+CFLAGS = -Wall -Werror -Wno-unused-result -O2
 O = ./obj
+EXEC = $(O)/strings
+SRC = ./src/*.c
 
 all:
-#	gcc -o ./obj/strings ./src/*.c
+	$(CC) $(CFLAGS) -o $(EXEC) $(SRC)
+
 run:
-	./obj/strings
+	$(EXEC)
+
+asm:
+	for file in $(SRC); do \
+		$(CC) $(CFLAGS) -S -o $(O)/$$(basename $$file .c).s $$file; \
+	done
+
+clear:
+	rm -f $(O)/*
